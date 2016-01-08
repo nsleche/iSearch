@@ -33,7 +33,7 @@ class SearchViewController: UIViewController {
     
     func urlWithSearchText(searchText:String) -> NSURL {
         let escapedSearchText = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200", escapedSearchText)
+        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=20", escapedSearchText)
         let url = NSURL(string: urlString)
         return url!
     }
@@ -132,9 +132,8 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
-            
-            tableView.reloadData()
             isLoading = true
+            tableView.reloadData()
             
             hasSearched = true
             searchResults = [SearchResult]()
@@ -183,7 +182,10 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if isLoading {
-            return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath)
+            let spinner = cell.viewWithTag(1) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
         } else if searchResults.count == 0 {
             return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.nothingFoundCell, forIndexPath: indexPath)
         } else {

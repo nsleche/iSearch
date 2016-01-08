@@ -33,7 +33,7 @@
                             <constraint firstItem="W9W-qA-dfg" firstAttribute="leading" secondItem="i23-5N-bGl" secondAttribute="leading" constant="20" id="pLL-nR-LAU"/>
                         </constraints>
                     </view>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yro-dA-xdz">
+                    <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yro-dA-xdz">
                         <rect key="frame" x="188" y="30" width="20" height="20"/>
                     </activityIndicatorView>
                 </subviews>
