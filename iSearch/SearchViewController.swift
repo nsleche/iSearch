@@ -17,14 +17,24 @@ class SearchViewController: UIViewController {
     var hasSearched = false
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        tableView.rowHeight = 80.0
+        var cellNib = UINib(nibName: "SearchResultsCell", bundle: nil)
+        tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.searchResultCell)
+        cellNib = UINib(nibName: "NothingFoundTableViewCell", bundle: nil)
+        tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.nothingFoundCell)
     }
+    
 
 
 
 }
 
+
+struct TableViewCellIdentifiers {
+    static let searchResultCell = "SearchResultCell"
+    static let nothingFoundCell = "NothingFoundCell"
+}
 
 
 extension SearchViewController: UISearchBarDelegate {
@@ -62,20 +72,15 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell")
-        if cell == nil {
-            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "Cell")
-        }
-        
         if searchResults.count == 0 {
-            cell.textLabel?.text = "(Nothing Found)"
-            cell.detailTextLabel?.text = ""
+            return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.nothingFoundCell, forIndexPath: indexPath)
         } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.searchResultCell, forIndexPath: indexPath) as! SearchResultsTableViewCell
             let result = searchResults[indexPath.row]
-            cell.textLabel?.text = result.name
-            cell.detailTextLabel?.text = result.artistName
+            cell.nameLabel.text = result.name
+            cell.addressLabel.text = result.artistName
+            return cell
         }
-        return cell
     }
     
 }
@@ -93,5 +98,6 @@ extension SearchViewController: UITableViewDelegate {
             return indexPath
         }
     }
+
     
 }
