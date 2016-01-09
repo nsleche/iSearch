@@ -10,7 +10,6 @@
 		23EC7F1D1C3F235E00830C84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F1C1C3F235E00830C84 /* AppDelegate.swift */; };
 		23EC7F221C3F235E00830C84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EC7F201C3F235E00830C84 /* Main.storyboard */; };
 		23EC7F241C3F235E00830C84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EC7F231C3F235E00830C84 /* Assets.xcassets */; };
-		23EC7F271C3F235E00830C84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EC7F251C3F235E00830C84 /* LaunchScreen.storyboard */; };
 		23EC7F2F1C3F238800830C84 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F2E1C3F238800830C84 /* SearchViewController.swift */; };
 		23EC7F321C3F284600830C84 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F311C3F284600830C84 /* SearchResult.swift */; };
 		23EC7F351C3F2D8600830C84 /* SearchResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EC7F341C3F2D8600830C84 /* SearchResultsCell.xib */; };
@@ -20,6 +19,7 @@
 		23EC7F3E1C40132C00830C84 /* Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F3D1C40132C00830C84 /* Parse.swift */; };
 		23EC7F411C40774700830C84 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F3F1C40774700830C84 /* LoadingCell.swift */; };
 		23EC7F421C40774700830C84 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EC7F401C40774700830C84 /* LoadingCell.xib */; };
+		23EC7F451C408D7A00830C84 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,6 @@
 		23EC7F1C1C3F235E00830C84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23EC7F211C3F235E00830C84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		23EC7F231C3F235E00830C84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		23EC7F261C3F235E00830C84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23EC7F281C3F235E00830C84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23EC7F2E1C3F238800830C84 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		23EC7F311C3F284600830C84 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		23EC7F3D1C40132C00830C84 /* Parse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parse.swift; sourceTree = "<group>"; };
 		23EC7F3F1C40774700830C84 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		23EC7F401C40774700830C84 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,11 +73,11 @@
 				23EC7F3C1C40131200830C84 /* Parse */,
 				23EC7F331C3F2D7600830C84 /* View */,
 				23EC7F301C3F283C00830C84 /* Model */,
+				23EC7F431C408D6200830C84 /* Extensions */,
 				23EC7F1C1C3F235E00830C84 /* AppDelegate.swift */,
 				23EC7F2E1C3F238800830C84 /* SearchViewController.swift */,
 				23EC7F201C3F235E00830C84 /* Main.storyboard */,
 				23EC7F231C3F235E00830C84 /* Assets.xcassets */,
-				23EC7F251C3F235E00830C84 /* LaunchScreen.storyboard */,
 				23EC7F281C3F235E00830C84 /* Info.plist */,
 			);
 			path = iSearch;
@@ -110,6 +110,14 @@
 				23EC7F3D1C40132C00830C84 /* Parse.swift */,
 			);
 			name = Parse;
+			sourceTree = "<group>";
+		};
+		23EC7F431C408D6200830C84 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,7 +179,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23EC7F271C3F235E00830C84 /* LaunchScreen.storyboard in Resources */,
 				23EC7F241C3F235E00830C84 /* Assets.xcassets in Resources */,
 				23EC7F421C40774700830C84 /* LoadingCell.xib in Resources */,
 				23EC7F3B1C3F320800830C84 /* NothingFoundTableViewCell.xib in Resources */,
@@ -191,6 +198,7 @@
 				23EC7F3E1C40132C00830C84 /* Parse.swift in Sources */,
 				23EC7F2F1C3F238800830C84 /* SearchViewController.swift in Sources */,
 				23EC7F321C3F284600830C84 /* SearchResult.swift in Sources */,
+				23EC7F451C408D7A00830C84 /* UIImageView+DownloadImage.swift in Sources */,
 				23EC7F411C40774700830C84 /* LoadingCell.swift in Sources */,
 				23EC7F1D1C3F235E00830C84 /* AppDelegate.swift in Sources */,
 				23EC7F3A1C3F320800830C84 /* NothingFoundTableViewCell.swift in Sources */,
@@ -206,14 +214,6 @@
 				23EC7F211C3F235E00830C84 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		23EC7F251C3F235E00830C84 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				23EC7F261C3F235E00830C84 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
