@@ -20,6 +20,8 @@
 		23EC7F411C40774700830C84 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F3F1C40774700830C84 /* LoadingCell.swift */; };
 		23EC7F421C40774700830C84 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EC7F401C40774700830C84 /* LoadingCell.xib */; };
 		23EC7F451C408D7A00830C84 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */; };
+		23F0F43E1C445E2E00FF83E9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F0F43D1C445E2E00FF83E9 /* DetailViewController.swift */; };
+		23F0F4411C44607F00FF83E9 /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F0F4401C44607F00FF83E9 /* DimmingPresentationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		23EC7F3F1C40774700830C84 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		23EC7F401C40774700830C84 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
+		23F0F43D1C445E2E00FF83E9 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		23F0F4401C44607F00FF83E9 /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +77,11 @@
 				23EC7F3C1C40131200830C84 /* Parse */,
 				23EC7F331C3F2D7600830C84 /* View */,
 				23EC7F301C3F283C00830C84 /* Model */,
+				23F0F43F1C44606000FF83E9 /* Controllers */,
 				23EC7F431C408D6200830C84 /* Extensions */,
 				23EC7F1C1C3F235E00830C84 /* AppDelegate.swift */,
 				23EC7F2E1C3F238800830C84 /* SearchViewController.swift */,
+				23F0F43D1C445E2E00FF83E9 /* DetailViewController.swift */,
 				23EC7F201C3F235E00830C84 /* Main.storyboard */,
 				23EC7F231C3F235E00830C84 /* Assets.xcassets */,
 				23EC7F281C3F235E00830C84 /* Info.plist */,
@@ -118,6 +124,14 @@
 				23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		23F0F43F1C44606000FF83E9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				23F0F4401C44607F00FF83E9 /* DimmingPresentationController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +208,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23F0F43E1C445E2E00FF83E9 /* DetailViewController.swift in Sources */,
+				23F0F4411C44607F00FF83E9 /* DimmingPresentationController.swift in Sources */,
 				23EC7F371C3F2F8100830C84 /* SearchResultsTableViewCell.swift in Sources */,
 				23EC7F3E1C40132C00830C84 /* Parse.swift in Sources */,
 				23EC7F2F1C3F238800830C84 /* SearchViewController.swift in Sources */,
@@ -341,6 +357,7 @@
 				23EC7F2D1C3F235E00830C84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
