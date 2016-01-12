@@ -20,6 +20,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var priceButton: UIButton!
     
     var searchResult: SearchResult!
+    var downloadTask:NSURLSessionDownloadTask?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -27,6 +28,10 @@ class DetailViewController: UIViewController {
         transitioningDelegate = self
     }
     
+    deinit {
+        print("deinit:\(self)")
+        downloadTask?.cancel()
+    }
     
     
     override func viewDidLoad() {
@@ -72,9 +77,18 @@ class DetailViewController: UIViewController {
         }
         
         priceButton.setTitle(priceText, forState: .Normal)
+        
+        if let url = NSURL(string: searchResult.artworkURL100) {
+            downloadTask = artworkImageView.loadImageWithURL(url)
+        }
     }
     
     
+    @IBAction func openIsStore(sender: AnyObject) {
+        if let url = NSURL(string: searchResult.storeURL) {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
 
     @IBAction func close(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
