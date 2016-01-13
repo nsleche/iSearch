@@ -12,44 +12,62 @@ typealias SearchComplete = (Bool) -> Void
 
 class Search {
     
-    var searchResults = [SearchResult]()
-    var hasSearched = false
-    var isLoading = false
+    enum Category: Int {
+        case All = 0
+        case Music = 1
+        case Software = 2
+        case EBooks = 3
+        
+        var entityName:String {
+            switch self {
+            case .All: return ""
+            case .Music: return "musicTrack"
+            case .Software: return "software"
+            case .EBooks: return "ebook"
+            }
+        }
+    }
+    
+    enum State {
+        case NotSearchedYet
+        case Loading
+        case NoResults
+        case Results([SearchResult])
+    }
     
     private var dataTask : NSURLSessionDataTask? = nil
     
-    func performSearchForText(text: String, category: Int, completion: SearchComplete) {
+    private(set) var state:State = .NotSearchedYet
+    
+    func performSearchForText(text: String, category: Category, completion: SearchComplete) {
         if !text.isEmpty {
             dataTask?.cancel()
             
-            isLoading = true
-            hasSearched = true
-            searchResults = [SearchResult]()
+            state = .Loading
             
             let url = urlWithSearchText(text, category: category)
             
             let session = NSURLSession.sharedSession()
             
             dataTask = session.dataTaskWithURL(url, completionHandler: { data, response, error in
+                self.state = .NotSearchedYet
                 var success = false
                 if let error = error where error.code == -999 {
                     return
                 }
                 if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode == 200 {
                     if let data = data, dictionary = self.parseJSON(data) {
-                        self.searchResults = self.parseDictionary(dictionary)
-                        self.searchResults.sortInPlace({ (r1, r2) -> Bool in
-                            return r1.name.localizedStandardCompare(r2.name) == .OrderedAscending
-                        })
-                        print("Success")
-                        self.isLoading = false
+                        var searchResults = self.parseDictionary(dictionary)
+                        if searchResults.isEmpty {
+                            self.state = .NoResults
+                        } else {
+                            searchResults.sortInPlace({ (r1, r2) -> Bool in
+                                return r1.name.localizedStandardCompare(r2.name) == .OrderedAscending
+                            })
+                            self.state = .Results(searchResults)
+                        }
                         success = true
                     }
-                }
-                
-                if !success {
-                    self.hasSearched = false
-                    self.isLoading = false
                 }
                 dispatch_async(dispatch_get_main_queue()) {
                     completion(success)
@@ -63,22 +81,12 @@ class Search {
     
     
     
-    private func urlWithSearchText(searchText:String, category: Int) -> NSURL {
+    private func urlWithSearchText(searchText:String, category: Category) -> NSURL {
         
-        let entity : String
-        switch category {
-        case 1:
-            entity = "musicTrack"
-        case 2:
-            entity = "software"
-        case 3:
-            entity = "ebook"
-        default:
-            entity = ""
-        }
+        let entityName = category.entityName
         
         let escapedSearchText = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200&entity=%@", escapedSearchText, entity)
+        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200&entity=%@", escapedSearchText, entityName)
         let url = NSURL(string: urlString)
         return url!
     }
