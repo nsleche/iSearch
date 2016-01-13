@@ -85,6 +85,36 @@
             </objects>
             <point key="canvasLocation" x="-22" y="367"/>
         </scene>
+        <!--Landscape View Controller-->
+        <scene sceneID="PIN-Cc-ZSX">
+            <objects>
+                <viewController storyboardIdentifier="LandscapeViewController" id="pkm-Fa-lM4" customClass="LandscapeViewController" customModule="iSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uCB-QB-Mo1"/>
+                        <viewControllerLayoutGuide type="bottom" id="rav-iz-zi1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="G8f-L1-MA2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SearchViewController in landscape orientation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcL-Th-hd6">
+                                <rect key="frame" x="124" y="289" width="352" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="lcL-Th-hd6" firstAttribute="centerY" secondItem="G8f-L1-MA2" secondAttribute="centerY" id="CBx-XU-8kx"/>
+                            <constraint firstItem="lcL-Th-hd6" firstAttribute="centerX" secondItem="G8f-L1-MA2" secondAttribute="centerX" id="Kga-xT-ngM"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SjZ-VD-5q7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-22" y="1052"/>
+        </scene>
         <!--Detail View Controller-->
         <scene sceneID="BXE-ro-0Rk">
             <objects>
