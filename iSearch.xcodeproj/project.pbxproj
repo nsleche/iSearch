@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2315FF7F1C470EC4000D5023 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2315FF7E1C470EC4000D5023 /* Search.swift */; };
 		233CCF721C45BFBF00362C51 /* GrandientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233CCF711C45BFBF00362C51 /* GrandientView.swift */; };
 		233CCF741C45C34700362C51 /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233CCF731C45C34700362C51 /* BounceAnimationController.swift */; };
 		233CCF761C45C60900362C51 /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233CCF751C45C60900362C51 /* SlideOutAnimationController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2315FF7E1C470EC4000D5023 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		233CCF711C45BFBF00362C51 /* GrandientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandientView.swift; sourceTree = "<group>"; };
 		233CCF731C45C34700362C51 /* BounceAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
 		233CCF751C45C60900362C51 /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				233CCF731C45C34700362C51 /* BounceAnimationController.swift */,
 				233CCF751C45C60900362C51 /* SlideOutAnimationController.swift */,
 				233CCF7D1C45CDBA00362C51 /* FadeOutController.swift */,
+				2315FF7E1C470EC4000D5023 /* Search.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				233CCF781C45C76200362C51 /* LandscapeViewController.swift in Sources */,
 				23EC7F1D1C3F235E00830C84 /* AppDelegate.swift in Sources */,
 				233CCF741C45C34700362C51 /* BounceAnimationController.swift in Sources */,
+				2315FF7F1C470EC4000D5023 /* Search.swift in Sources */,
 				233CCF7E1C45CDBA00362C51 /* FadeOutController.swift in Sources */,
 				23EC7F3A1C3F320800830C84 /* NothingFoundTableViewCell.swift in Sources */,
 			);
