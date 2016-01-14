@@ -21,9 +21,9 @@ class Search {
         var entityName:String {
             switch self {
             case .All: return ""
-            case .Music: return "musicTrack"
-            case .Software: return "software"
-            case .EBooks: return "ebook"
+            case .Music: return NSLocalizedString("musicTrack", comment: "Localized kind: musicTrack")
+            case .Software: return NSLocalizedString("software", comment: "Localized kind: software")
+            case .EBooks: return NSLocalizedString("ebook", comment: "Localized kind: ebook")
             }
         }
     }
@@ -86,9 +86,13 @@ class Search {
     private func urlWithSearchText(searchText:String, category: Category) -> NSURL {
         
         let entityName = category.entityName
+        let locale = NSLocale.autoupdatingCurrentLocale()
+        let language = locale.localeIdentifier
+        let countryCode = locale.objectForKey(NSLocaleCountryCode) as! String
         
         let escapedSearchText = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200&entity=%@", escapedSearchText, entityName)
+        
+        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200&entity=%@&lang=%@&country=%@", escapedSearchText, entityName, language, countryCode)
         let url = NSURL(string: urlString)
         return url!
     }
