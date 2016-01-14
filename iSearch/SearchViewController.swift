@@ -1,4 +1,4 @@
-//
+
 //  SearchViewController.swift
 //  iSearch
 //
@@ -71,6 +71,9 @@ class SearchViewController: UIViewController {
             controller.willMoveToParentViewController(nil)
             
             coordinator.animateAlongsideTransition({ _ in
+                if self.presentedViewController != nil {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
                 controller.view.alpha = 0
                 }, completion: { _ in
                     controller.view.removeFromSuperview()
@@ -121,11 +124,13 @@ struct TableViewCellIdentifiers {
 
 extension SearchViewController: UISearchBarDelegate {
     func performSearch() {
+        
         if let category = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
             search.performSearchForText(searchBar.text!, category: category, completion: { success in
                 if !success {
                     self.showNetworkError()
                 }
+                self.landscapeViewController?.searchResultsReceived()
                 self.tableView.reloadData()
             })
         
