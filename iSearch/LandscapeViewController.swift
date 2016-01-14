@@ -34,6 +34,7 @@ class LandscapeViewController: UIViewController {
         pageControl.translatesAutoresizingMaskIntoConstraints = true
         pageControl.currentPage = 0
         
+        
         scrollView.removeConstraints(scrollView.constraints)
         scrollView.translatesAutoresizingMaskIntoConstraints = true
         scrollView.backgroundColor = UIColor(patternImage: UIImage(named: "LandscapeBackground")!)
@@ -57,13 +58,55 @@ class LandscapeViewController: UIViewController {
             case .NotSearchedYet:
                 break
             case .Loading:
-                break
+                showSpinner()
             case .NoResults:
-                break
+                showNothingFoundLabel()
             case .Results(let list):
                 tileButtons(list)
             }
         }
+    }
+    
+    private func showNothingFoundLabel() {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = "Nothing Found"
+        label.textColor = UIColor.whiteColor()
+        label.backgroundColor = UIColor.clearColor()
+        
+        label.sizeToFit()
+        
+        var rect = label.frame
+        rect.size.width = ceil(rect.size.width / 2) * 2
+        rect.size.height = ceil(rect.size.height / 2) * 2
+        label.frame = rect
+        label.center = CGPoint(x: CGRectGetMidX(scrollView.bounds), y: CGRectGetMidY(scrollView.bounds))
+        view.addSubview(label)
+    }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        spinner.center = CGPoint(x: CGRectGetMidX(scrollView.bounds) + 0.5,
+                                 y: CGRectGetMidY(scrollView.bounds) + 0.5)
+        spinner.tag = 1000
+        view.addSubview(spinner)
+        spinner.startAnimating()
+    }
+    
+    func searchResultsReceived() {
+        hideSpinner()
+        
+        switch search.state {
+        case .NotSearchedYet, .Loading:
+            break
+        case .NoResults:
+            showNothingFoundLabel()
+        case .Results(let list):
+            tileButtons(list)
+        }
+    }
+    
+    private func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview()
     }
     
     private func downloadImageForSearchResult(searchResult:SearchResult, andPlaceOnButton button:UIButton) {
@@ -118,14 +161,16 @@ class LandscapeViewController: UIViewController {
         default:
             break
         }
-        var index = 0
+        
         var row = 0
         var column = 0
         var x = marginX
-        for searchResult in searchResults {
+        for (index, searchResult) in searchResults.enumerate() {
             // 1
             let button = UIButton(type: .Custom)
             button.setBackgroundImage(UIImage(named: "LandscapeButton"), forState: .Normal)
+            button.tag = 2000 + index
+            button.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
             downloadImageForSearchResult(searchResult, andPlaceOnButton: button)
             // 2
             button.frame = CGRect(
@@ -135,7 +180,6 @@ class LandscapeViewController: UIViewController {
             // 3
             scrollView.addSubview(button)
             // 4
-            ++index
             ++row
             if row == rowsPerPage {
                 row = 0; x += itemWidth; ++column
@@ -153,6 +197,19 @@ class LandscapeViewController: UIViewController {
         pageControl.currentPage = 0
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowDetail" {
+            if case .Results(let list) = search.state {
+                let detailViewController = segue.destinationViewController as! DetailViewController
+                let searchResult = list[sender!.tag - 2000]
+                detailViewController.searchResult = searchResult
+            }
+        }
+    }
+    
+    func buttonPressed(sender: UIButton) {
+        performSegueWithIdentifier("ShowDetail", sender: sender)
+    }
     
     @IBAction func pageChanged(sender:UIPageControl) {
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut,
