@@ -17,9 +17,12 @@ class SearchViewController: UIViewController {
     let search = Search()
     
     var landscapeViewController:LandscapeViewController?
+    weak var splitViewDetail: DetailViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0)
         tableView.rowHeight = 80.0
         var cellNib = UINib(nibName: "SearchResultsCell", bundle: nil)
@@ -29,7 +32,20 @@ class SearchViewController: UIViewController {
         cellNib = UINib(nibName: TableViewCellIdentifiers.loadingCell, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loadingCell)
         
-        searchBar.becomeFirstResponder()
+        
+        title = NSLocalizedString("Search", comment: "Split-view master button")
+        
+        if UIDevice.currentDevice().userInterfaceIdiom != .Pad {
+            searchBar.becomeFirstResponder()
+        }
+    }
+    
+    func hideMasterPane() {
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.splitViewController!.preferredDisplayMode = .PrimaryHidden
+            }) { _ in
+                self.splitViewController!.preferredDisplayMode = .Automatic
+        }
     }
     
     
@@ -102,6 +118,7 @@ class SearchViewController: UIViewController {
                 let indexPath = sender as! NSIndexPath
                 let searchResult = list[indexPath.row]
                 detailViewController.searchResult = searchResult
+                detailViewController.isPopUp = true
             }
         }
     }
@@ -190,8 +207,21 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("ShowDetail", sender: indexPath)
+        searchBar.resignFirstResponder()
+        
+        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .Compact {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            performSegueWithIdentifier("ShowDetail", sender: indexPath)
+        } else {
+            if case .Results(let list) = search.state {
+                splitViewDetail?.searchResult = list[indexPath.row]
+            }
+            if splitViewController!.displayMode != .AllVisible {
+                hideMasterPane()
+            }
+        }
+        
+        
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
