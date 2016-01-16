@@ -30,6 +30,7 @@
 		23EC7F451C408D7A00830C84 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */; };
 		23F0F43E1C445E2E00FF83E9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F0F43D1C445E2E00FF83E9 /* DetailViewController.swift */; };
 		23F0F4411C44607F00FF83E9 /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F0F4401C44607F00FF83E9 /* DimmingPresentationController.swift */; };
+		23FBF98A1C49C37300EE61F9 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FBF9891C49C37300EE61F9 /* MenuTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		23EC7F441C408D7A00830C84 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		23F0F43D1C445E2E00FF83E9 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		23F0F4401C44607F00FF83E9 /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
+		23FBF9891C49C37300EE61F9 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				23EC7F2E1C3F238800830C84 /* SearchViewController.swift */,
 				23F0F43D1C445E2E00FF83E9 /* DetailViewController.swift */,
 				233CCF771C45C76200362C51 /* LandscapeViewController.swift */,
+				23FBF9891C49C37300EE61F9 /* MenuTableViewController.swift */,
 				23EC7F201C3F235E00830C84 /* Main.storyboard */,
 				23EC7F231C3F235E00830C84 /* Assets.xcassets */,
 				23EC7F281C3F235E00830C84 /* Info.plist */,
@@ -251,6 +254,7 @@
 				23EC7F451C408D7A00830C84 /* UIImageView+DownloadImage.swift in Sources */,
 				23EC7F411C40774700830C84 /* LoadingCell.swift in Sources */,
 				233CCF781C45C76200362C51 /* LandscapeViewController.swift in Sources */,
+				23FBF98A1C49C37300EE61F9 /* MenuTableViewController.swift in Sources */,
 				23EC7F1D1C3F235E00830C84 /* AppDelegate.swift in Sources */,
 				233CCF741C45C34700362C51 /* BounceAnimationController.swift in Sources */,
 				2315FF7F1C470EC4000D5023 /* Search.swift in Sources */,

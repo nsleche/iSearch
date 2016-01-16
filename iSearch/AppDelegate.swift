@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         customizeAppearance()
-        
+        splitViewController.delegate = self
         searchViewController.splitViewDetail = detailViewController
         
         return true
@@ -66,5 +66,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate: UISplitViewControllerDelegate {
+    func splitViewController(svc: UISplitViewController, willChangeToDisplayMode displayMode: UISplitViewControllerDisplayMode) {
+        print(__FUNCTION__)
+        if displayMode == .PrimaryOverlay {
+            
+            svc.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
 }
 

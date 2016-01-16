@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class DetailViewController: UIViewController {
     
@@ -113,6 +114,15 @@ class DetailViewController: UIViewController {
     }
     
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowMenu" {
+            let controller = segue.destinationViewController as! MenuTableViewController
+            controller.delegate = self
+        }
+    }
+    
+    
+    
     @IBAction func openIsStore(sender: AnyObject) {
         if let url = NSURL(string: searchResult.storeURL) {
             UIApplication.sharedApplication().openURL(url)
@@ -126,6 +136,27 @@ class DetailViewController: UIViewController {
 }
 
 
+
+extension DetailViewController: MenuTableViewControllerDelegate {
+    func menuViewControllerSendSupportEmail(controller: MenuTableViewController) {
+        dismissViewControllerAnimated(true) { () -> Void in
+            if MFMailComposeViewController.canSendMail() {
+                let controller = MFMailComposeViewController()
+                controller.setSubject(NSLocalizedString("Support Request", comment: "Email subject"))
+                controller.setToRecipients(["cristianojorgy@hotmail.com"])
+                controller.mailComposeDelegate = self
+                controller.modalPresentationStyle = .FormSheet
+                self.presentViewController(controller, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
+extension DetailViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}
 
 extension DetailViewController: UIViewControllerTransitioningDelegate {
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
