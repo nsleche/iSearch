@@ -10,4 +10,4 @@ App using the iTunes API for search and buy things, for iPhone and iPad
 
 - iPad version
 
-![App Screenshot](screenshots/screenshot-ipad)
+![App Screenshot](screenshots/screenshot-ipad.png)
