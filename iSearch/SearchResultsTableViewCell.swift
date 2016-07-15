@@ -13,7 +13,7 @@ class SearchResultsTableViewCell: UITableViewCell {
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    var downloadTask: NSURLSessionDownloadTask?
+    var downloadTask: URLSessionDownloadTask?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,14 +34,14 @@ class SearchResultsTableViewCell: UITableViewCell {
         cellImage.image = nil
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
     
-    func confugureSearchResult(searchResult:SearchResult) {
+    func confugureSearchResult(_ searchResult:SearchResult) {
         nameLabel.text = searchResult.name
         
         if searchResult.artistName.isEmpty {
@@ -52,7 +52,7 @@ class SearchResultsTableViewCell: UITableViewCell {
                 searchResult.artistName, searchResult.kindForDisplay())
         }
         cellImage.image = UIImage(named: "Placeholder")
-        if let url = NSURL(string: searchResult.artworkURL60) {
+        if let url = URL(string: searchResult.artworkURL60) {
             downloadTask = cellImage.loadImageWithURL(url)
         }
     }

@@ -13,66 +13,66 @@ typealias SearchComplete = (Bool) -> Void
 class Search {
     
     enum Category: Int {
-        case All = 0
-        case Music = 1
-        case Software = 2
-        case EBooks = 3
+        case all = 0
+        case music = 1
+        case software = 2
+        case eBooks = 3
         
         var entityName:String {
             switch self {
-            case .All: return ""
-            case .Music: return NSLocalizedString("musicTrack", comment: "Localized kind: musicTrack")
-            case .Software: return NSLocalizedString("software", comment: "Localized kind: software")
-            case .EBooks: return NSLocalizedString("ebook", comment: "Localized kind: ebook")
+            case .all: return ""
+            case .music: return NSLocalizedString("musicTrack", comment: "Localized kind: musicTrack")
+            case .software: return NSLocalizedString("software", comment: "Localized kind: software")
+            case .eBooks: return NSLocalizedString("ebook", comment: "Localized kind: ebook")
             }
         }
     }
     
     enum State {
-        case NotSearchedYet
-        case Loading
-        case NoResults
-        case Results([SearchResult])
+        case notSearchedYet
+        case loading
+        case noResults
+        case results([SearchResult])
     }
     
-    private var dataTask : NSURLSessionDataTask? = nil
+    private var dataTask : URLSessionDataTask? = nil
     
-    private(set) var state:State = .NotSearchedYet
+    private(set) var state:State = .notSearchedYet
     
-    func performSearchForText(text: String, category: Category, completion: SearchComplete) {
+    func performSearchForText(_ text: String, category: Category, completion: SearchComplete) {
         if !text.isEmpty {
             dataTask?.cancel()
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.shared().isNetworkActivityIndicatorVisible = true
             
-            state = .Loading
+            state = .loading
             
             let url = urlWithSearchText(text, category: category)
             
-            let session = NSURLSession.sharedSession()
+            let session = URLSession.shared()
             
-            dataTask = session.dataTaskWithURL(url, completionHandler: { data, response, error in
-                self.state = .NotSearchedYet
+            dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+                self.state = .notSearchedYet
                 var success = false
                 if let error = error where error.code == -999 {
                     return
                 }
-                if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode == 200 {
+                if let httpResponse = response as? HTTPURLResponse where httpResponse.statusCode == 200 {
                     if let data = data, dictionary = self.parseJSON(data) {
                         var searchResults = self.parseDictionary(dictionary)
                         if searchResults.isEmpty {
-                            self.state = .NoResults
+                            self.state = .noResults
                         } else {
-                            searchResults.sortInPlace({ (r1, r2) -> Bool in
-                                return r1.name.localizedStandardCompare(r2.name) == .OrderedAscending
+                            searchResults.sort(isOrderedBefore: { (r1, r2) -> Bool in
+                                return r1.name.localizedStandardCompare(r2.name) == .orderedAscending
                             })
-                            self.state = .Results(searchResults)
+                            self.state = .results(searchResults)
                         }
                         success = true
                     }
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     completion(success)
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.shared().isNetworkActivityIndicatorVisible = false
                 }
                 
             })
@@ -83,31 +83,31 @@ class Search {
     
     
     
-    private func urlWithSearchText(searchText:String, category: Category) -> NSURL {
+    private func urlWithSearchText(_ searchText:String, category: Category) -> URL {
         
         let entityName = category.entityName
-        let locale = NSLocale.autoupdatingCurrentLocale()
+        let locale = Locale.autoupdatingCurrent()
         let language = locale.localeIdentifier
-        let countryCode = locale.objectForKey(NSLocaleCountryCode) as! String
+        let countryCode = locale.object(forKey: Locale.Key.countryCode) as! String
         
-        let escapedSearchText = searchText.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        let escapedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         
         let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200&entity=%@&lang=%@&country=%@", escapedSearchText, entityName, language, countryCode)
-        let url = NSURL(string: urlString)
+        let url = URL(string: urlString)
         return url!
     }
     
     
-    private func parseJSON(jsonData: NSData) -> [String:AnyObject]? {
+    private func parseJSON(_ jsonData: Data) -> [String:AnyObject]? {
         do {
-            return try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [String:AnyObject]
+            return try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String:AnyObject]
         } catch {
             print("Error parsing")
             return nil
         }
     }
     
-    private func parseDictionary(dictionary: [String:AnyObject]) -> [SearchResult] {
+    private func parseDictionary(_ dictionary: [String:AnyObject]) -> [SearchResult] {
         guard let array = dictionary["results"] as? [AnyObject] else {
             print("Expected 'results' array")
             return []

@@ -11,7 +11,7 @@ import Foundation
 
 class Parse {
     
-    class func parseTrack(dictionary: [String: AnyObject]) -> SearchResult {
+    class func parseTrack(_ dictionary: [String: AnyObject]) -> SearchResult {
         let searchResult = SearchResult()
         
         searchResult.name = dictionary["trackName"] as! String
@@ -32,7 +32,7 @@ class Parse {
         return searchResult
     }
     
-    class func parseAudioBook(dictionary: [String: AnyObject]) -> SearchResult {
+    class func parseAudioBook(_ dictionary: [String: AnyObject]) -> SearchResult {
         let searchResult = SearchResult()
         searchResult.name = dictionary["collectionName"] as! String
         searchResult.artistName = dictionary["artistName"] as! String
@@ -52,7 +52,7 @@ class Parse {
     }
     
     
-    class func parseSoftware(dictionary: [String: AnyObject]) -> SearchResult {
+    class func parseSoftware(_ dictionary: [String: AnyObject]) -> SearchResult {
         let searchResult = SearchResult()
         searchResult.name = dictionary["trackName"] as! String
         searchResult.artistName = dictionary["artistName"] as! String
@@ -71,7 +71,7 @@ class Parse {
         return searchResult
     }
     
-    class func parseEBook(dictionary: [String: AnyObject]) -> SearchResult {
+    class func parseEBook(_ dictionary: [String: AnyObject]) -> SearchResult {
         let searchResult = SearchResult()
         searchResult.name = dictionary["trackName"] as! String
         searchResult.artistName = dictionary["artistName"] as! String
@@ -85,7 +85,7 @@ class Parse {
             searchResult.price = price
         }
         if let genres: AnyObject = dictionary["genres"] {
-            searchResult.genre = (genres as! [String]).joinWithSeparator(", ")
+            searchResult.genre = (genres as! [String]).joined(separator: ", ")
         }
         return searchResult
     }

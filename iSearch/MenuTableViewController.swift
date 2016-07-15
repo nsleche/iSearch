@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MenuTableViewControllerDelegate: class {
-    func menuViewControllerSendSupportEmail(controller:MenuTableViewController)
+    func menuViewControllerSendSupportEmail(_ controller:MenuTableViewController)
 }
 
 class MenuTableViewController: UITableViewController {
@@ -26,8 +26,8 @@ class MenuTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).row == 0 {
             delegate?.menuViewControllerSendSupportEmail(self)
         }
     }

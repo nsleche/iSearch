@@ -26,53 +26,53 @@ class SearchViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0)
         tableView.rowHeight = 80.0
         var cellNib = UINib(nibName: "SearchResultsCell", bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.searchResultCell)
+        tableView.register(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.searchResultCell)
         cellNib = UINib(nibName: "NothingFoundTableViewCell", bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.nothingFoundCell)
+        tableView.register(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.nothingFoundCell)
         cellNib = UINib(nibName: TableViewCellIdentifiers.loadingCell, bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loadingCell)
+        tableView.register(cellNib, forCellReuseIdentifier: TableViewCellIdentifiers.loadingCell)
         
         
         title = NSLocalizedString("Search", comment: "Split-view master button")
         
-        if UIDevice.currentDevice().userInterfaceIdiom != .Pad {
+        if UIDevice.current().userInterfaceIdiom != .pad {
             searchBar.becomeFirstResponder()
         }
     }
     
     func hideMasterPane() {
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
-            self.splitViewController!.preferredDisplayMode = .PrimaryHidden
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+            self.splitViewController!.preferredDisplayMode = .primaryHidden
             }) { _ in
-                self.splitViewController!.preferredDisplayMode = .Automatic
+                self.splitViewController!.preferredDisplayMode = .automatic
         }
     }
     
     
-    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransitionToTraitCollection(newCollection, withTransitionCoordinator: coordinator)
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
         
-        let rect = UIScreen.mainScreen().bounds
+        let rect = UIScreen.main().bounds
         if (rect.width == 736 && rect.height == 414) ||
             (rect.width == 414 && rect.height == 736) {
                 if presentedViewController != nil {
-                    dismissViewControllerAnimated(true, completion: nil)
+                    dismiss(animated: true, completion: nil)
                 }
-        } else if UIDevice.currentDevice().userInterfaceIdiom != .Pad {
+        } else if UIDevice.current().userInterfaceIdiom != .pad {
         
             switch newCollection.verticalSizeClass {
-            case .Compact:
+            case .compact:
                 showLandscapeViewWithCoordinator(coordinator)
-            case .Regular, .Unspecified:
+            case .regular, .unspecified:
                 hideLandscapeViewWithCoordinator(coordinator)
             }
         }
     }
     
-    func showLandscapeViewWithCoordinator(coordinator:UIViewControllerTransitionCoordinator) {
+    func showLandscapeViewWithCoordinator(_ coordinator:UIViewControllerTransitionCoordinator) {
         precondition(landscapeViewController == nil)
         
-        landscapeViewController = storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController") as? LandscapeViewController
+        landscapeViewController = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
         if let controller = landscapeViewController {
             controller.search = search
             controller.view.frame = view.bounds
@@ -80,25 +80,25 @@ class SearchViewController: UIViewController {
             view.addSubview(controller.view)
             addChildViewController(controller)
             
-            coordinator.animateAlongsideTransition({ _ in
+            coordinator.animate(alongsideTransition: { _ in
                 controller.view.alpha = 1
                 self.searchBar.resignFirstResponder()
                 if self.presentedViewController != nil {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
                 }, completion: { _ in
-                    controller.didMoveToParentViewController(self)
+                    controller.didMove(toParentViewController: self)
             })
         }
     }
     
-    func hideLandscapeViewWithCoordinator(coordinator:UIViewControllerTransitionCoordinator) {
+    func hideLandscapeViewWithCoordinator(_ coordinator:UIViewControllerTransitionCoordinator) {
         if let controller = landscapeViewController {
-            controller.willMoveToParentViewController(nil)
+            controller.willMove(toParentViewController: nil)
             
-            coordinator.animateAlongsideTransition({ _ in
+            coordinator.animate(alongsideTransition: { _ in
                 if self.presentedViewController != nil {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
                 controller.view.alpha = 0
                 }, completion: { _ in
@@ -113,27 +113,27 @@ class SearchViewController: UIViewController {
         
 
     func showNetworkError() {
-        let alert = UIAlertController(title: NSLocalizedString("Whoops", comment: "Network error"), message:NSLocalizedString("There was an error reading from the iTunes store. Please try again!", comment: "Try search again, got a network error"), preferredStyle: .Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let alert = UIAlertController(title: NSLocalizedString("Whoops", comment: "Network error"), message:NSLocalizedString("There was an error reading from the iTunes store. Please try again!", comment: "Try search again, got a network error"), preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowDetail" {
-            if case .Results(let list) = search.state {
+            if case .results(let list) = search.state {
                 let detailViewController = segue.destinationViewController as! DetailViewController
-                let indexPath = sender as! NSIndexPath
-                let searchResult = list[indexPath.row]
+                let indexPath = sender as! IndexPath
+                let searchResult = list[(indexPath as NSIndexPath).row]
                 detailViewController.searchResult = searchResult
                 detailViewController.isPopUp = true
             }
         }
     }
     
-    @IBAction func segmentChanged(sender: UISegmentedControl) {
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         performSearch()
     }
     
@@ -167,44 +167,44 @@ extension SearchViewController: UISearchBarDelegate {
 
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         performSearch()
     }
     
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .TopAttached
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
     }
 }
 
 
 extension SearchViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch search.state {
-        case .NotSearchedYet:
+        case .notSearchedYet:
             return 0
-        case .Loading:
+        case .loading:
             return 1
-        case .NoResults:
+        case .noResults:
             return 1
-        case .Results(let list):
+        case .results(let list):
             return list.count
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch search.state {
-        case .NotSearchedYet :
+        case .notSearchedYet :
             fatalError("Should Never get here")
-        case .Loading:
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath)
+        case .loading:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.loadingCell, for: indexPath)
             let spinner = cell.viewWithTag(1) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
-        case .NoResults:
-            return tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.nothingFoundCell, forIndexPath: indexPath)
-        case .Results(let list):
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.searchResultCell, forIndexPath: indexPath) as! SearchResultsTableViewCell
-            let searchResult = list[indexPath.row]
+        case .noResults:
+            return tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.nothingFoundCell, for: indexPath)
+        case .results(let list):
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.searchResultCell, for: indexPath) as! SearchResultsTableViewCell
+            let searchResult = list[(indexPath as NSIndexPath).row]
             cell.confugureSearchResult(searchResult)
             return cell
         }
@@ -216,17 +216,17 @@ extension SearchViewController: UITableViewDataSource {
 
 extension SearchViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBar.resignFirstResponder()
         
-        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .Compact {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            performSegueWithIdentifier("ShowDetail", sender: indexPath)
+        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .compact {
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "ShowDetail", sender: indexPath)
         } else {
-            if case .Results(let list) = search.state {
-                splitViewDetail?.searchResult = list[indexPath.row]
+            if case .results(let list) = search.state {
+                splitViewDetail?.searchResult = list[(indexPath as NSIndexPath).row]
             }
-            if splitViewController!.displayMode != .AllVisible {
+            if splitViewController!.displayMode != .allVisible {
                 hideMasterPane()
             }
         }
@@ -234,11 +234,11 @@ extension SearchViewController: UITableViewDelegate {
         
     }
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         switch search.state {
-        case .NotSearchedYet:
+        case .notSearchedYet:
             return nil
-        case .Results:
+        case .results:
             return indexPath
         default:
             return nil
