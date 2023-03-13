@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  iLove
+
+  Created by Antonio Alves on 1/14/16.
+  Copyright © 2016 Antonio Alves. All rights reserved.
+*/
+
+CFBundleDisplayName = "iZoeker";
